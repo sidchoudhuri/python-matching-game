@@ -1,2 +1,2 @@
 # python-matching-game
-A matching game written in Python
+A C64 themed matching game written in Python
