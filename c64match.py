@@ -12,20 +12,20 @@ def create_board(size):
     # Remember to add symbols if board is bigger than 4x4
     if size * size // 2 > len(symbols):
         symbols = symbols * (size * size // 2 // len(symbols) + 1)
-    
+
     board_symbols = symbols[:(size * size // 2)] * 2
     random.shuffle(board_symbols)
-    
+
     grid = []
     for _ in range(size):
         row = [board_symbols.pop() for _ in range(size)]
         grid.append(row)
-        
+
     return grid
 
 def display_board(board, revealed_status):
     """Display board to con, formatted for 2-char symbols"""
-    # Print column with  spacing
+    # Print column with spacing
     print("  " + " ".join(f"{i:2}" for i in range(len(board))))
     for i, row in enumerate(board):
         print(f"{i} ", end="")
@@ -55,12 +55,23 @@ def get_player_move(board_size, message):
 def play_game():
     """Main game loop"""
     print("Welcome to m0nde's C64 Match!")
-    
+
     board_size = 4
     board = create_board(board_size)
     if board is None:
         return
-        
+
+    # --- Display Symbols before game starts ---
+    all_symbols = set()
+    for row in board:
+        all_symbols.update(row)
+    
+    print("\nSymbols to match:")
+    print(" ".join(sorted(list(all_symbols))))
+    print("-" * 30)
+    input("Press Enter to start the game and hide the symbols...")
+    # --- End Display Symbols ---
+
     revealed_status = [[False for _ in range(board_size)] for _ in range(board_size)]
     matched_pairs = 0
     total_pairs = board_size * board_size // 2
@@ -69,10 +80,10 @@ def play_game():
     while matched_pairs < total_pairs:
         # Clear screen to hide old state
         print("\n" * 50)
-        
+
         # Display move counter
         print(f"Moves made: {moves_made}")
-        
+
         # Display the current state of the board
         display_board(board, revealed_status)
 
@@ -86,7 +97,7 @@ def play_game():
 
         # Display board with 1st selection revealed
         display_board(board, revealed_status)
-        
+
         # Get second guess
         row2, col2 = get_player_move(board_size, "Enter coordinates for the 2nd symbol")
         # Check if tile was selected twice or is already matched
@@ -96,7 +107,7 @@ def play_game():
             time.sleep(1)
             continue
         revealed_status[row2][col2] = True
-        
+
         # Display board with both revealed
         display_board(board, revealed_status)
 
@@ -106,12 +117,13 @@ def play_game():
         # Check for match
         if board[row1][col1] == board[row2][col2]:
             print("It's a match!")
+            matched_pairs += 1 # Critical fix: Increment the matched pairs count
         else:
             print("No match. Take a moment to remember their positions!")
             input("Press Enter to continue...") # Wait for input
             revealed_status[row1][col1] = False
             revealed_status[row2][col2] = False
-        
+
     print(f"Congrats! You matched all the symbols in {moves_made} moves!")
 
 if __name__ == "__main__":
