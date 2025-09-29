@@ -5,6 +5,13 @@ A C64 themed matching game written in Python
 
 Example Playthrough
 ```
+Welcome to m0nde's C64 Match!
+
+Symbols to match:
+64 8B C= F1 F3 F5 F7 m0
+------------------------------
+Press Enter to start the game and hide the symbols...
+
 Moves made: 0
 Welcome to m0nde's C64 Memory Game!
    0  1  2  3
