@@ -1,5 +1,7 @@
-# python-matching-game
+# C64 Match!
 A C64 themed matching game written in Python
+
+[Open in Colab](https://colab.research.google.com/github/sidchoudhuri/c64-match/blob/main/C64MatchingGame.ipynb)
 
 Example Playthrough
 ```
